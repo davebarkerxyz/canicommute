@@ -12,12 +12,14 @@ func main() {
 		printUsage()
 	}
 
+	config := commute.GetConfig()
+
 	switch os.Args[1] {
 	case "check":
 		if len(os.Args) != 3 {
 			printUsage()
 		}
-		checkCommute(os.Args[2])
+		checkCommute(config, os.Args[2])
 	case "serve":
 		serve()
 	default:
@@ -35,9 +37,7 @@ Usage: canicommute
 For example: canicommute check "G1 1XH"`)
 }
 
-func checkCommute(location string) {
-	config := commute.GetConfig()
-
+func checkCommute(config commute.Config, location string) {
 	if len(config.AutoSuffix) != 0 {
 		location += ", " + config.AutoSuffix
 	}
