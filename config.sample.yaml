@@ -1,0 +1,8 @@
+auto_suffix: "Scotland, United Kingdom"
+arrival_time:
+  hour: 8
+  min: 30
+locations:
+  - "G3 8AG, Glasgow, Scotland"
+  - "G51 1DA, Glasgow, Scotland"
+api_key: "ENTER GOOGLE API KEY HERE - don't commit it to your repository!"
