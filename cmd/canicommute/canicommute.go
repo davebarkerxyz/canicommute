@@ -8,16 +8,35 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		commute.Die(`Check commute times by public transit from given location to a list of configured destinations.
-
-Usage: canicommute <location>
-
-For example: canicommute "G1 1XH"`)
+	if len(os.Args) == 1 {
+		printUsage()
 	}
 
+	switch os.Args[1] {
+	case "check":
+		if len(os.Args) != 3 {
+			printUsage()
+		}
+		checkCommute(os.Args[2])
+	case "serve":
+		serve()
+	default:
+		printUsage()
+	}
+}
+
+func printUsage() {
+	commute.Die(`Check commute times by public transit from given location to a list of configured destinations.
+
+Usage: canicommute
+         check <location>    check commute time to location
+         serve               start web server
+
+For example: canicommute check "G1 1XH"`)
+}
+
+func checkCommute(location string) {
 	config := commute.GetConfig()
-	location := os.Args[1]
 
 	if len(config.AutoSuffix) != 0 {
 		location += ", " + config.AutoSuffix
@@ -32,4 +51,8 @@ For example: canicommute "G1 1XH"`)
 
 	matrixRows := commute.GetDistanceMatrix(config, location)
 	commute.PrintResults(matrixRows)
+}
+
+func serve() {
+	commute.Die("TODO: web server")
 }
